@@ -26,12 +26,6 @@ Commands
 :ToggleCoverage
     Toggles coverage highlighting on and off
 
-:NextUncovered
-    Jump to the next uncovered range of source lines
-
-:PrevUncovered
-    Jump to the previous uncovered range of source lines
-
 
 Settings
 --------
