@@ -10,16 +10,16 @@ endif
 let s:python = has('python3') ? 'python3' : 'python'
 exec s:python "import vim, coverage_highlight"
 
-function! coverage_highlight#highlight(arg)
-    exec s:python "coverage_highlight.highlight(vim.eval('a:arg'))"
+function! coverage_highlight#highlight_all()
+    exec s:python "coverage_highlight.highlight_all()"
     augroup CovergeHighlight
-      au! * <buffer>
-      au CursorMoved <buffer> exec s:python "coverage_highlight.cursor_moved()"
+      au!
+      au CursorMoved * exec s:python "coverage_highlight.cursor_moved()"
     augroup END
 endf
 
-function! coverage_highlight#highlight_all()
-    exec s:python "coverage_highlight.highlight_all()"
+function! coverage_highlight#highlight_redo()
+    exec s:python "coverage_highlight.highlight_redo()"
     augroup CovergeHighlight
       au!
       au CursorMoved * exec s:python "coverage_highlight.cursor_moved()"

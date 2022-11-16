@@ -4,16 +4,12 @@
 " Last Modified: 2022-03-01
 " Contributors: Louis Cochen <louis.cochen@protonmail.ch>
 
-let g:coverage_script = get(g:, 'coverage_script', '')
+let g:elm_coverage_binary = get(g:, 'elm_coverage_binary', '')
 
 if &encoding == 'utf-8'
   let g:coverage_sign = get(g:, 'coverage_sign', '↣')
-  let g:coverage_sign_branch = get(g:, 'coverage_sign_branch', '↦')
-  let g:coverage_sign_branch_target = get(g:, 'coverage_sign_branch_target', '⇥')
 else
   let g:coverage_sign = get(g:, 'coverage_sign', '>>')
-  let g:coverage_sign_branch = get(g:, 'coverage_sign_branch', '~>')
-  let g:coverage_sign_branch_target = get(g:, 'coverage_sign_branch_target', '>~')
 endif
 
 if g:coverage_sign == ''
@@ -23,28 +19,10 @@ else
         \ . ' texthl=NoCoverage linehl=NoCoverage'
 endif
 
-if g:coverage_sign_branch == ''
-  sign define NoBranchCoverage linehl=NoBranchCoverage
-else
-  execute 'sign define NoBranchCoverage text=' . g:coverage_sign_branch
-        \ . ' texthl=NoBranchCoverage linehl=NoBranchCoverage'
-endif
-
-if g:coverage_sign_branch_target == ''
-  sign define NoBranchCoverageTarget linehl=NoBranchCoverageTarget
-else
-  execute 'sign define NoBranchCoverageTarget text=' . g:coverage_sign_branch_target
-        \ . ' texthl=NoBranchCoverageTarget linehl=NoBranchCoverageTarget'
-endif
-
-command! -nargs=* -complete=file -bar HighlightCoverage
-            \ call coverage_highlight#highlight(<q-args>)
-command! -bar HighlightCoverageForAll call coverage_highlight#highlight_all()
+command! -bar HighlightCoverage call coverage_highlight#highlight_all()
+command! -bar HighlightCoverageRedo call coverage_highlight#highlight_redo()
 command! -bar HighlightCoverageOff call coverage_highlight#off()
 command! -bar ToggleCoverage call coverage_highlight#toggle()
-
-command! -bar NextUncovered call coverage_highlight#next()
-command! -bar PrevUncovered call coverage_highlight#prev()
 
 augroup CoverageHighlight
   autocmd!
